@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+
+  <title>School Arts Fest</title>
+
+  <style>
+    :root {
+      --p: #176b2c;
+      --p2: #0f5120;
+      --r: #c62828;
+      --b: #1565c0;
+      --gold: #b77900;
+      --bg: #f3f5f7;
+      --card: #fff;
+      --t: #18202a;
+      --m: #667085;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--t);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 14px;
+      background: var(--p);
+      color: #fff;
+      cursor: pointer;
+      margin: 3px;
+      touch-action: manipulation;
+    }
+
+    button.red {
+      background: var(--r);
+    }
+
+    button.blue {
+      background: var(--b);
+    }
+
+    button.gold {
+      background: var(--gold);
+    }
+
+    button.gray {
+      background: #475467;
+    }
+
+    button.light {
+      background: #e9eef0;
+      color: #18202a;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      min-height: 46px;
+      border: 1px solid #ccd2d8;
+      border-radius: 8px;
+      background: #fff;
+      color: #18202a;
+
+      -webkit-appearance: none;
+      appearance: none;
+
+      /* Mobile keyboard support */
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 2px solid #176b2c44;
+      border-color: #176b2c;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 13px;
+      margin: 10px 0 5px;
+    }
+
+    .top {
+      background: linear-gradient(135deg, var(--p), var(--p2));
+      color: #fff;
+      padding: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .brand {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: #ffffff22;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 21px;
+    }
+
+    .brand small {
+      opacity: 0.85;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: auto;
+      padding: 14px;
+    }
+
+    .login {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #e0f4e5, #f4f6f7);
+    }
+
+    .loginbox {
+      width: 100%;
+      max-width: 480px;
+      background: #fff;
+      padding: 28px;
+      border-radius: 20px;
+      box-shadow: 0 15px 50px #0002;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 15px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 18px #00000012;
+    }
+
+    .nav {
+      display: flex;
+      gap: 7px;
+      overflow: auto;
+      padding: 5px 0 12px;
+      position: sticky;
+      top: 84px;
+      background: var(--bg);
+      z-index: 10;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .nav button {
+      white-space: nowrap;
+      background: #e3e8eb;
+      color: #25313d;
+    }
+
+    .nav button.active {
+      background: var(--p);
+      color: #fff;
+    }
+
+    .muted {
+      color: var(--m);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .toast {
+      position: fixed;
+      right: 15px;
+      bottom: 15px;
+      background: #18202a;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 10px;
+      z-index: 200;
+      max-width: 90%;
+    }
+
+    .login-type-info {
+      padding: 10px 12px;
+      margin-top: 10px;
+      background: #f1f7f2;
+      border-radius: 9px;
+      font-size: 13px;
+    }
+
+    .code-input {
+      font-size: 22px;
+      letter-spacing: 5px;
+      text-align: center;
+      min-height: 50px;
+    }
+
+    .danger-box {
+      border: 1px solid #f1b5b5;
+      background: #fff6f6;
+    }
+
+    .group-row {
+      border: 1px solid #e0e4e8;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+      background: #fff;
+    }
+
+    .code-badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 7px;
+      background: #eef3f0;
+      font-family: monospace;
+      letter-spacing: 2px;
+    }
+
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .brand h1 {
+        font-size: 18px;
+      }
+
+      .loginbox {
+        padding: 22px;
+      }
+
+      .top {
+        padding: 11px;
+      }
+
+      .nav {
+        top: 70px;
+      }
+
+      button {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN SCREEN ================= -->
+
+<div id="loginScreen" class="login">
+
+  <div class="loginbox">
+
+    <div class="center">
+
+      <div id="loginLogo"
+           class="logo"
+           style="margin:auto">
+        🏆
+      </div>
+
+      <h1 id="loginSchool">
+        School Arts Fest
+      </h1>
+
+      <p class="muted">
+        Competition Management System
+      </p>
+
+    </div>
+
+
+    <label for="loginRole">
+      Login Type
+    </label>
+
+    <select id="loginRole"
+            onchange="loginFields()">
+
+      <option value="official">
+        Official Team
+      </option>
+
+      <option value="leader">
+        Group Leader
+      </option>
+
+      <option value="participant">
+        Participant
+      </option>
+
+    </select>
+
+
+    <div id="loginFields"></div>
+
+
+    <button id="loginButton"
+            style="width:100%;margin-top:12px"
+            onclick="login()">
+
+      Login
+
+    </button>
+
+
+    <p id="loginHelp"
+       class="muted"
+       style="font-size:12px">
+
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- ================= APPLICATION ================= -->
+
+<div id="app" class="hidden">
+
+  <header class="top">
+
+    <div class="brand">
+
+      <div id="brandLogo"
+           class="logo">
+        🏆
+      </div>
+
+      <div>
+
+        <h1 id="brandSchool">
+          School Arts Fest
+        </h1>
+
+        <small id="brandEvent">
+          Annual Arts Fest
+        </small>
+
+      </div>
+
+      <div style="margin-left:auto">
+
+        <button class="light"
+                onclick="logout()">
+
+          Logout
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <div class="wrap">
+
+    <div class="nav"
+         id="nav">
+    </div>
+
+    <div id="content">
+    </div>
+
+  </div>
+
+</div>
+
+
+<div id="toast"
+     class="toast hidden">
+</div>
+
+
+<script>
+
+/* =========================================================
+   DATABASE
+========================================================= */
+
+const KEY = "SCHOOL_ARTS_FEST_PRO_V5";
+
+
+const defaultDB = {
+
+  settings: {
+
+    schoolName: "School Arts Fest",
+
+    eventName: "Annual Arts Fest",
+
+    logo: "",
+
+    background: "",
+
+    officialPin: "1234",
+
+    categories: [
+      "Sub Junior",
+      "Junior",
+      "Senior"
+    ],
+
+    genders: [
+      "Girls",
+      "Boys",
+      "Both"
+    ],
+
+    points: {
+      1: 5,
+      2: 3,
+      3: 1
+    },
+
+    publish: false
+
+  },
+
+
+  groups: [
+
+    {
+      id: "g1",
+      name: "Group 1",
+      password: "12345"
+    },
+
+    {
+      id: "g2",
+      name: "Group 2",
+      password: "123456"
+    }
+
+  ],
+
+
+  students: [],
+
+  competitions: [],
+
+  registrations: [],
+
+  marks: [],
+
+  results: []
+
+};
+
+
+/* =========================================================
+   GLOBALS
+========================================================= */
+
+let db = load();
+
+let session = null;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function $(id) {
+
+  return document.getElementById(id);
+
+}
+
+
+function uid() {
+
+  return Math.random()
+    .toString(36)
+    .substring(2) +
+    Date.now();
+
+}
+
+
+function cloneDefault() {
+
+  return JSON.parse(
+    JSON.stringify(defaultDB)
+  );
+
+}
+
+
+function load() {
+
+  try {
+
+    const old =
+      localStorage.getItem(KEY);
+
+    if (old) {
+
+      return normalizeDB(
+        JSON.parse(old)
+      );
+
+    }
+
+    return cloneDefault();
+
+  }
+
+  catch (e) {
+
+    return cloneDefault();
+
+  }
+
+}
+
+
+function normalizeDB(data) {
+
+  const d = cloneDefault();
+
+  if (
+    data &&
+    typeof data === "object"
+  ) {
+
+    d.settings = {
+      ...d.settings,
+      ...(data.settings || {})
+    };
+
+
+    if (
+      Array.isArray(data.groups)
+    ) {
+
+      d.groups =
+        data.groups.map(g => ({
+
+          id:
+            g.id ||
+            uid(),
+
+          name:
+            g.name ||
+            "Group",
+
+          password:
+            String(
+              g.password ||
+              ""
+            )
+
+        }));
+
+    }
+
+
+    if (Array.isArray(data.students))
+      d.students = data.students;
+
+
+    if (
+      Array.isArray(
+        data.competitions
+      )
+    )
+      d.competitions =
+        data.competitions;
+
+
+    if (
+      Array.isArray(
+        data.registrations
+      )
+    )
+      d.registrations =
+        data.registrations;
+
+
+    if (
+      Array.isArray(data.marks)
+    )
+      d.marks = data.marks;
+
+
+    if (
+      Array.isArray(data.results)
+    )
+      d.results = data.results;
+
+  }
+
+  return d;
+
+}
+
+
+function save() {
+
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(db)
+  );
+
+}
+
+
+function esc(value) {
+
+  return String(
+    value ?? ""
+  )
+    .replaceAll("&", "&amp;")
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+
+function toast(message) {
+
+  const x = $("toast");
+
+  x.textContent = message;
+
+  x.classList.remove(
+    "hidden"
+  );
+
+  setTimeout(
+    () =>
+      x.classList.add(
+        "hidden"
+      ),
+    2200
+  );
+
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+function brand() {
+
+  $("brandSchool")
+    .textContent =
+    db.settings.schoolName;
+
+  $("brandEvent")
+    .textContent =
+    db.settings.eventName;
+
+  $("loginSchool")
+    .textContent =
+    db.settings.schoolName;
+
+}
+
+
+/* =========================================================
+   LOGIN FIELDS
+========================================================= */
+
+function loginFields() {
+
+  const role =
+    $("loginRole").value;
+
+  const f =
+    $("loginFields");
+
+  const help =
+    $("loginHelp");
+
+
+  /* ---------------- OFFICIAL ---------------- */
+
+  if (
+    role === "official"
+  ) {
+
+    f.innerHTML = `
+
+      <label for="loginPin">
+        Official Team Code / PIN
+      </label>
+
+      <input
+        id="loginPin"
+        class="code-input"
+        type="password"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        autocomplete="off"
+        placeholder="Enter Official Code"
+      >
+
+      <div class="login-type-info">
+        <b>Official Team</b><br>
+        Enter the Official Team Code to access administration.
+      </div>
+
+    `;
+
+    help.innerHTML =
+      "Official Team Code is required.";
+
+    return;
+
+  }
+
+
+  /* ---------------- GROUP LEADER ---------------- */
+
+  if (
+    role === "leader"
+  ) {
+
+    f.innerHTML = `
+
+      <label for="loginGroup">
+        Select Your Group
+      </label>
+
+      <select id="loginGroup">
+
+        ${db.groups.map(
+          g => `
+            <option value="${esc(g.id)}">
+              ${esc(g.name)}
+            </option>
+          `
+        ).join("")}
+
+      </select>
+
+
+      <label for="loginPin">
+        Group Code / PIN
+      </label>
+
+      <input
+        id="loginPin"
+        class="code-input"
+        type="password"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        autocomplete="off"
+        placeholder="Enter Group Code"
+      >
+
+      <div class="login-type-info">
+
+        <b>Group Leader</b><br>
+
+        Select your group and enter
+        that group's code.
+
+      </div>
+
+    `;
+
+    help.innerHTML =
+      "Each group has its own separate code.";
+
+    return;
+
+  }
+
+
+  /* ---------------- PARTICIPANT ---------------- */
+
+  f.innerHTML = `
+
+    <div class="login-type-info"
+         style="margin-top:15px">
+
+      <b>Participant Access</b><br>
+
+      No code or password is required.
+
+      Click <b>Login</b> to enter directly.
+
+    </div>
+
+  `;
+
+  help.innerHTML =
+    "Participant access does not require a code.";
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function login() {
+
+  const role =
+    $("loginRole").value;
+
+
+  /* ---------------- OFFICIAL LOGIN ---------------- */
+
+  if (
+    role === "official"
+  ) {
+
+    const pin =
+      $("loginPin")
+        ? $("loginPin")
+            .value
+            .trim()
+        : "";
+
+
+    if (
+      pin !==
+      String(
+        db.settings.officialPin
+      )
+    ) {
+
+      toast(
+        "Wrong Official Code"
+      );
+
+      return;
+
+    }
+
+
+    session = {
+      role: "official"
+    };
+
+  }
+
+
+  /* ---------------- GROUP LOGIN ---------------- */
+
+  else if (
+    role === "leader"
+  ) {
+
+    const gid =
+      $("loginGroup")
+        ? $("loginGroup").value
+        : "";
+
+
+    const pass =
+      $("loginPin")
+        ? $("loginPin")
+            .value
+            .trim()
+        : "";
+
+
+    const group =
+      db.groups.find(
+        g => g.id === gid
+      );
+
+
+    if (
+      !group ||
+      String(group.password) !==
+      String(pass)
+    ) {
+
+      toast(
+        "Invalid Group Code"
+      );
+
+      return;
+
+    }
+
+
+    session = {
+
+      role: "leader",
+
+      groupId: gid
+
+    };
+
+  }
+
+
+  /* ---------------- PARTICIPANT ---------------- */
+
+  else {
+
+    session = {
+      role: "participant"
+    };
+
+  }
+
+
+  $("loginScreen")
+    .classList.add(
+      "hidden"
+    );
+
+  $("app")
+    .classList.remove(
+      "hidden"
+    );
+
+
+  renderApp();
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout() {
+
+  session = null;
+
+  $("app")
+    .classList.add(
+      "hidden"
+    );
+
+  $("loginScreen")
+    .classList.remove(
+      "hidden"
+    );
+
+  loginFields();
+
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+function renderApp() {
+
+  const nav =
+    $("nav");
+
+  const content =
+    $("content");
+
+
+  /* ---------------- OFFICIAL ---------------- */
+
+  if (
+    session.role ===
+    "official"
+  ) {
+
+    nav.innerHTML = `
+
+      <button
+        class="active"
+        onclick="showOfficialDashboard()">
+
+        Dashboard
+
+      </button>
+
+      <button
+        onclick="showSecuritySettings()">
+
+        Security Codes
+
+      </button>
+
+      <button
+        onclick="showGroups()">
+
+        Groups
+
+      </button>
+
+    `;
+
+    showOfficialDashboard();
+
+    return;
+
+  }
+
+
+  /* ---------------- LEADER ---------------- */
+
+  if (
+    session.role ===
+    "leader"
+  ) {
+
+    nav.innerHTML = `
+
+      <button
+        class="active"
+        onclick="showLeaderDashboard()">
+
+        Dashboard
+
+      </button>
+
+      <button
+        onclick="showLeaderCodeSettings()">
+
+        Change Group Code
+
+      </button>
+
+    `;
+
+    showLeaderDashboard();
+
+    return;
+
+  }
+
+
+  /* ---------------- PARTICIPANT ---------------- */
+
+  nav.innerHTML = `
+
+    <button class="active">
+      Participant
+    </button>
+
+  `;
+
+  content.innerHTML = `
+
+    <div class="card">
+
+      <h2>
+        Participant Access
+      </h2>
+
+      <p>
+        You entered without a code.
+      </p>
+
+      <p class="muted">
+        Participant login does not require
+        a password or Student ID.
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   OFFICIAL DASHBOARD
+========================================================= */
+
+function showOfficialDashboard() {
+
+  $("content").innerHTML = `
+
+    <div class="card">
+
+      <h2>
+        Official Team Dashboard
+      </h2>
+
+      <p>
+        Welcome, Official Team.
+      </p>
+
+      <p class="muted">
+        You have full administration access.
+      </p>
+
+    </div>
+
+
+    <div class="grid">
+
+      <div class="card">
+
+        <h3>
+          Security
+        </h3>
+
+        <p>
+          Change the Official Team Code.
+        </p>
+
+        <button
+          onclick="showSecuritySettings()">
+
+          Change Official Code
+
+        </button>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>
+          Groups
+        </h3>
+
+        <p>
+          Add groups and assign separate codes.
+        </p>
+
+        <button
+          class="blue"
+          onclick="showGroups()">
+
+          Manage Groups
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   OFFICIAL SECURITY
+========================================================= */
+
+function showSecuritySettings() {
+
+  if (
+    !session ||
+    session.role !== "official"
+  ) {
+
+    return;
+
+  }
+
+
+  $("content").innerHTML = `
+
+    <div class="card">
+
+      <h2>
+        Official Team Code
+      </h2>
+
+      <p class="muted">
+        Change the code used by the Official Team
+        to enter the system.
+      </p>
+
+
+      <label>
+        Current Official Code
+      </label>
+
+      <input
+        type="password"
+        inputmode="numeric"
+        value="${esc(db.settings.officialPin)}"
+        disabled
+      >
+
+
+      <label>
+        New Official Code
+      </label>
+
+      <input
+        id="newOfficialCode"
+        class="code-input"
+        type="password"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        autocomplete="off"
+        placeholder="Enter New Code"
+      >
+
+
+      <label>
+        Confirm New Official Code
+      </label>
+
+      <input
+        id="confirmOfficialCode"
+        class="code-input"
+        type="password"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        autocomplete="off"
+        placeholder="Confirm New Code"
+      >
+
+
+      <button
+        onclick="changeOfficialCode()">
+
+        Save New Official Code
+
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   CHANGE OFFICIAL CODE
+========================================================= */
+
+function changeOfficialCode() {
+
+  const a =
+    $("newOfficialCode")
+      .value
+      .trim();
+
+
+  const b =
+    $("confirmOfficialCode")
+      .value
+      .trim();
+
+
+  if (!a) {
+
+    toast(
+      "Enter a new Official Code"
+    );
+
+    return;
+
+  }
+
+
+  if (a !== b) {
+
+    toast(
+      "Codes do not match"
+    );
+
+    return;
+
+  }
+
+
+  if (a.length < 4) {
+
+    toast(
+      "Code must be at least 4 digits"
+    );
+
+    return;
+
+  }
+
+
+  db.settings.officialPin =
+    a;
+
+  save();
+
+  toast(
+    "Official Code changed successfully"
+  );
+
+
+  setTimeout(
+    showSecuritySettings,
+    600
+  );
+
+}
+
+
+/* =========================================================
+   GROUP MANAGEMENT
+========================================================= */
+
+function showGroups() {
+
+  if (
+    !session ||
+    session.role !== "official"
+  ) {
+
+    return;
+
+  }
+
+
+  $("content").innerHTML = `
+
+    <div class="card">
+
+      <h2>
+        Group Management
+      </h2>
+
+      <p class="muted">
+        Add as many groups as you need.
+        Each group can have its own separate code.
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>
+        Add New Group
+      </h3>
+
+
+      <label>
+        Group Name
+      </label>
+
+      <input
+        id="newGroupName"
+ 
